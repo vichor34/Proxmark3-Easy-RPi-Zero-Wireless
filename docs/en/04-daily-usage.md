@@ -330,9 +330,19 @@ pm
 
 **3. Launch the Iceman client:**
 
+If the Iceman client is not already running inside the tmux session:
+
 ```bash
 pm3
 ```
+
+> 💡 **Note**
+>
+> If `pm` reconnects you to an existing tmux session where Iceman is already running, do not start another instance of the client.
+>
+> Simply continue using the existing session.
+
+You can now use Proxmark3 commands.
 
 You can now use Proxmark3 commands.
 
@@ -531,7 +541,7 @@ From the first computer:
 
 1. Open the SSH session.
 2. Run `pm`.
-3. Run `pm3`.
+3. Run `pm3` only if the Iceman client is not already running in the tmux session.
 4. Detach the session with `Ctrl + B`, then `D`.
 5. Close the SSH connection.
 
@@ -895,17 +905,6 @@ We know how to:
 - Troubleshoot common connection problems.
 - Shut down the Raspberry Pi properly.
 
-### 🚀 In the Next Step
-
-We will learn how to use the same installation from a mobile device:
-
-- **iPhone and iPad (Apple / iOS / iPadOS).**
-- **Android smartphones and tablets.**
-
-We will explain how to install a suitable SSH client, save a connection to the Raspberry Pi, and use the Proxmark3 from a mobile terminal.
-
-The goal is to have a **wireless Proxmark3 Easy controlled from a smartphone**, without modifying the hardware.
-
 ---
 
 ## 📚 References
@@ -919,13 +918,9 @@ The goal is to have a **wireless Proxmark3 Easy controlled from a smartphone**, 
 
 ## 🧭 Navigation
 
-| ⬅️ Previous Step | 🏠 Table of Contents | 🌐 Français |
-|---|---|---|
-| [Step 3 — Proxmark3 Iceman Installation](03-proxmark3-installation.md) | [Back to Home](../../README.md) | [Étape 4 — Utilisation quotidienne](../fr/04-utilisation-quotidienne.md) |
-
-> 💡 **Temporary navigation**
->
-> Navigation links to the following chapters will be harmonized once all tutorial pages have been created.
+| ⬅️ Previous Step | 🏠 Table of Contents | ➡️ Next Step | 🌐 Français |
+|---|---|---|---|
+| [Step 3 — Proxmark3 Iceman Installation](03-proxmark3-installation.md) | [Back to Home](../../README.md) | [Step 5 — Mobile Connection](05-mobile-connection.md) | [Étape 4 — Utilisation quotidienne](../fr/04-utilisation-quotidienne.md) |
 
 ---
 
