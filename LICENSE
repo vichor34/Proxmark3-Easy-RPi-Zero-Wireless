@@ -1,21 +1,61 @@
-MIT License
+Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless
 
-Copyright (c) 2026 vichor34
+Copyright (c) 2026 Victor HANSEMANN
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+DOCUMENTATION LICENSE
+=====================
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Except where otherwise indicated, the original documentation,
+illustrations, diagrams, and other copyrightable documentation
+materials in this repository are licensed under:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International (CC BY-NC-SA 4.0).
+
+Official license:
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Full legal text:
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+Under this license, you may share and adapt the covered materials,
+provided that you:
+
+- Give appropriate credit to the author.
+- Indicate whether changes were made.
+- Do not use the materials for commercial purposes without
+  separate authorization.
+- Distribute adaptations under the same license or a
+  Creative Commons-approved compatible license.
+
+ADDITIONAL PERMISSIONS
+======================
+
+Additional permissions for internal professional use are granted
+under the conditions described in PERMISSIONS.md.
+
+COMMERCIAL LICENSING
+====================
+
+Commercial licensing may be available by separate written agreement.
+
+See COMMERCIAL.md for details.
+
+THIRD-PARTY MATERIALS
+=====================
+
+This license does not replace or modify the licenses of third-party
+software, firmware, libraries, tools, or other materials referenced
+by this project.
+
+It applies only to materials for which the copyright holder has
+the necessary rights.
+
+Software source code and hardware design files, if added to this
+repository, must have their applicable licenses specified separately.
+
+NO WARRANTY
+===========
+
+The materials are provided without warranties, subject to the
+provisions of the applicable license and mandatory law.
