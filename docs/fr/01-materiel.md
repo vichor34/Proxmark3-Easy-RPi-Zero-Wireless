@@ -123,4 +123,24 @@ Une fois Raspberry Pi OS installé et le système démarré, il sera possible de
 lsusb
 ```
 
-Pour rechercher le port série ass
+Pour rechercher le port série associé :
+
+```bash
+ls /dev/ttyACM*
+```
+
+Selon le firmware et la configuration, le Proxmark3 peut apparaître sous :
+
+```text
+/dev/ttyACM0
+```
+
+Ces vérifications seront détaillées dans le chapitre consacré à l'installation du Proxmark3.
+
+---
+
+## ➡️ Étape suivante
+
+**Installation et configuration de Raspberry Pi OS**
+
+Nous préparerons la carte microSD, activerons SSH et configurerons la connexion Wi-Fi.
