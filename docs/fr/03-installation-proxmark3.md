@@ -338,6 +338,20 @@ Exécuter :
 make -j2
 ```
 
+Immédiatement après la compilation, vérifier son code de retour :
+
+```bash
+echo $?
+```
+
+La valeur `0` indique que la compilation s'est terminée correctement.
+
+> ⚠️ **Important**
+>
+> Exécutez `echo $?` immédiatement après `make -j2`, sans lancer d'autre commande entre les deux.
+>
+> Si la compilation échoue, ne poursuivez pas vers le flashage.
+
 L'option `-j2` permet de lancer deux tâches de compilation simultanément.
 
 Ce réglage limite le parallélisme afin de tenir compte des ressources du Raspberry Pi Zero 2 W.
@@ -479,6 +493,16 @@ Dans notre installation, il apparaissait sous :
 Le numéro peut varier.
 
 ### ⚡ 8.2 — Flasher uniquement le firmware ARM
+
+> ⚠️ **Avant de flasher**
+>
+> Vérifiez que le fichier `armsrc/obj/fullimage.elf` provient bien de la compilation destinée à votre Proxmark3 Easy.
+>
+> Assurez-vous que le client et le firmware correspondent à la même version du code source.
+>
+> Cette procédure conserve le bootloader existant. Elle ne doit pas être appliquée sans vérification à une autre variante matérielle.
+>
+> Si votre Proxmark3 fonctionne déjà correctement et que vous n'avez pas besoin d'une nouvelle version, le flashage n'est pas nécessaire.
 
 **Ne poursuivez que si votre matériel correspond à la configuration documentée et que le firmware a été compilé correctement.**
 
@@ -790,18 +814,6 @@ Nous disposons désormais :
 - D'une commande `pm3` pour lancer le client.
 - D'une commande `pm` pour retrouver une session persistante.
 
-### 🚀 Pour aller plus loin
-
-Le système est maintenant prêt pour une utilisation à distance depuis un ordinateur ou un smartphone.
-
-Les prochains chapitres pourront notamment aborder :
-
-- L'utilisation quotidienne du Proxmark3.
-- Les connexions SSH depuis différents appareils.
-- Les outils de diagnostic.
-- Les opérations de maintenance.
-- Les procédures de sauvegarde et de mise à jour.
-
 ---
 
 ## 📚 Références
@@ -814,9 +826,9 @@ Les prochains chapitres pourront notamment aborder :
 
 ## 🧭 Navigation
 
-| ⬅️ Étape précédente | 🏠 Sommaire | 🌐 English |
-|---|---|---|
-| [Étape 2 — Installation du Raspberry Pi](02-installation-raspberry.md) | [Retour à l'accueil](../../README.fr.md) | [Step 3 — Proxmark3 Iceman Installation](../en/03-proxmark3-installation.md) |
+| ⬅️ Étape précédente | 🏠 Sommaire | ➡️ Étape suivante | 🌐 English |
+|---|---|---|---|
+| [Étape 2 — Installation du Raspberry Pi](02-installation-raspberry.md) | [Retour à l'accueil](../../README.fr.md) | [Étape 4 — Utilisation quotidienne](04-utilisation-quotidienne.md) | [Step 3 — Proxmark3 Iceman Installation](../en/03-proxmark3-installation.md) |
 
 ---
 
