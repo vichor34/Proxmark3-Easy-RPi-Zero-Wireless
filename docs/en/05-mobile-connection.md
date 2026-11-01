@@ -362,11 +362,17 @@ Run:
 pm
 ```
 
-Then:
+If the Iceman client is not already running inside the tmux session, start it:
 
 ```bash
 pm3
 ```
+
+> 💡 **Note**
+>
+> If `pm` reconnects you to an existing tmux session where Iceman is already running, do not start another instance of the client.
+>
+> Simply continue using the existing session.
 
 You can now use Iceman commands.
 
@@ -531,6 +537,14 @@ NetworkManager will request the password if necessary.
 >
 > Perform this operation only when you have a way to find the Raspberry Pi's address on the new network.
 
+> 💡 **First-Time Configuration Tip**
+>
+> If possible, perform this operation with local access to the Raspberry Pi (monitor and keyboard) or another backup connection method.
+>
+> When the Raspberry Pi switches from your home Wi-Fi network to the iPhone hotspot, your current SSH connection may be interrupted.
+>
+> Before traveling, verify that the Raspberry Pi can automatically reconnect to the saved hotspot network.
+
 ### 🔍 7.3 — Verify the Connection
 
 Once the Raspberry Pi is connected to the hotspot, find its IP address.
@@ -611,6 +625,14 @@ sudo nmcli device wifi connect "ANDROID_NETWORK_NAME" --ask
 Replace the network name with your Android hotspot's name.
 
 Enter the requested password.
+
+> ⚠️ **Warning**
+>
+> If you configure this network through an SSH connection using your home Wi-Fi, the connection may be interrupted when the Raspberry Pi joins the Android hotspot.
+>
+> Make sure you have a way to retrieve the Raspberry Pi's new IP address or access it locally before switching networks.
+>
+> Also test automatic reconnection before using this configuration while traveling.
 
 ### 🔍 8.4 — Find the IP Address
 
@@ -964,18 +986,6 @@ Thanks to the Raspberry Pi Zero 2 W, the Proxmark3 Easy can be controlled remote
 
 tmux sessions provide a persistent working environment and make it possible to switch between devices.
 
-### 🚀 In the Next Step
-
-We will cover installation maintenance:
-
-- Backing up important files.
-- Updating Raspberry Pi OS.
-- Updating the Iceman client.
-- Preparing a firmware update.
-- Checking versions and compatibility.
-- Diagnosing advanced problems.
-- Restoring a previous installation when necessary.
-
 ---
 
 ## 📚 References
@@ -991,13 +1001,9 @@ We will cover installation maintenance:
 
 ## 🧭 Navigation
 
-| ⬅️ Previous Step | 🏠 Table of Contents | 🌐 Français |
-|---|---|---|
-| [Step 4 — Daily Usage](04-daily-usage.md) | [Back to Home](../../README.md) | [Étape 5 — Connexion mobile](../fr/05-connexion-mobile.md) |
-
-> 💡 **Temporary navigation**
->
-> Navigation links will be harmonized once all tutorial pages have been created.
+| ⬅️ Previous Step | 🏠 Table of Contents | ➡️ Next Step | 🌐 Français |
+|---|---|---|---|
+| [Step 4 — Daily Usage](04-daily-usage.md) | [Back to Home](../../README.md) | [Step 6 — Maintenance and Backups](06-maintenance.md) | [Étape 5 — Connexion mobile](../fr/05-connexion-mobile.md) |
 
 ---
 
