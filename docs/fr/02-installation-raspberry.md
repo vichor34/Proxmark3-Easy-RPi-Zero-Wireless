@@ -14,15 +14,16 @@ L'installation s'effectue sans écran, clavier ni souris. Le Raspberry Pi sera a
 
 ### Configuration de référence
 
-| Élément             | Configuration        |
-| ------------------- | -------------------- |
-| Raspberry Pi        | Zero 2 W             |
-| Système             | Raspberry Pi OS Lite |
-| Architecture        | 64 bits              |
-| Base Debian         | Debian 13 (Trixie)   |
-| Interface graphique | Aucune               |
-| Gestionnaire réseau | NetworkManager       |
-| Accès distant       | SSH                  |
+| Élément               | Configuration        |
+| --------------------- | -------------------- |
+| Raspberry Pi          | Zero 2 W             |
+| Système               | Raspberry Pi OS Lite |
+| Architecture          | 64 bits              |
+| Base Debian           | Debian 13 (Trixie)   |
+| Interface graphique   | Aucune               |
+| Gestionnaire réseau   | NetworkManager       |
+| Accès distant         | SSH                  |
+| Sessions persistantes | tmux                 |
 
 La configuration présentée correspond au système utilisé pour ce projet.
 
@@ -273,8 +274,173 @@ Le Raspberry Pi pourra ensuite se reconnecter aux réseaux enregistrés lorsqu'i
 
 ---
 
+## 11. Maintenir une session active avec tmux
+
+Lorsqu'on utilise le Raspberry Pi à distance, une connexion SSH peut être interrompue si :
+
+* L'ordinateur passe en veille.
+* Le réseau Wi-Fi se déconnecte.
+* On ferme accidentellement le terminal.
+* On change de réseau ou d'appareil.
+
+Sans précaution particulière, les programmes exécutés dans le terminal peuvent alors être interrompus.
+
+**tmux** permet de conserver une session de terminal active sur le Raspberry Pi, indépendamment de la connexion SSH.
+
+C'est particulièrement utile pour compiler le firmware Proxmark3 Iceman ou effectuer des opérations longues.
+
+### 11.1 Installer tmux
+
+Depuis le terminal SSH :
+
+```bash
+sudo apt update
+sudo apt install tmux -y
+```
+
+Vérifier l'installation :
+
+```bash
+tmux -V
+```
+
+La commande doit afficher la version installée.
+
+### 11.2 Créer une session
+
+Exécuter :
+
+```bash
+tmux new -s proxmark
+```
+
+Une nouvelle session nommée `proxmark` est créée.
+
+Il est désormais possible de lancer des commandes dans cette session, par exemple :
+
+```bash
+pm3
+```
+
+La commande `pm3` sera disponible après l'installation du client Iceman décrite au chapitre 3.
+
+### 11.3 Détacher la session
+
+Pour quitter temporairement la session sans arrêter les programmes :
+
+1. Appuyer sur `Ctrl + B`.
+2. Relâcher les touches.
+3. Appuyer sur `D`.
+
+Le terminal revient à la session SSH classique.
+
+Les programmes lancés dans `tmux` continuent de fonctionner sur le Raspberry Pi.
+
+### 11.4 Retrouver une session
+
+Après une nouvelle connexion SSH :
+
+```bash
+tmux attach -t proxmark
+```
+
+Cette commande permet de retrouver la session précédente.
+
+Pour afficher les sessions existantes :
+
+```bash
+tmux ls
+```
+
+### 11.5 Simplifier avec la commande `pm`
+
+Pour éviter de saisir une longue commande à chaque connexion, nous allons créer un alias Bash.
+
+Exécuter :
+
+```bash
+echo "alias pm='tmux new-session -A -s proxmark'" >> ~/.bashrc
+```
+
+Recharger la configuration :
+
+```bash
+source ~/.bashrc
+```
+
+Désormais, une seule commande suffit :
+
+```bash
+pm
+```
+
+Son fonctionnement est automatique :
+
+* Si la session `proxmark` existe, elle est retrouvée.
+* Si elle n'existe pas, une nouvelle session est créée.
+
+L'alias sera disponible lors des prochaines connexions SSH avec Bash.
+
+### 11.6 Utilisation quotidienne
+
+La procédure devient très simple.
+
+**1. Se connecter au Raspberry Pi :**
+
+```bash
+ssh piuser@proxmark.local
+```
+
+**2. Ouvrir ou retrouver la session :**
+
+```bash
+pm
+```
+
+**3. Lancer Proxmark3 :**
+
+```bash
+pm3
+```
+
+**4. Pour quitter temporairement :**
+
+`Ctrl + B`, puis `D`.
+
+Lors de la prochaine connexion, saisir simplement `pm` pour retrouver la session.
+
+### 11.7 Fermer définitivement une session
+
+Pour fermer la session, quitter d'abord les programmes en cours, puis exécuter :
+
+```bash
+exit
+```
+
+La session `tmux` sera terminée lorsqu'aucun programme ni fenêtre ne restera actif.
+
+### 11.8 Limitations importantes
+
+**tmux ne maintient pas la connexion SSH elle-même.**
+
+Il conserve les programmes en fonctionnement sur le Raspberry Pi lorsque la connexion SSH est interrompue.
+
+Le Raspberry Pi doit rester allumé et les périphériques USB nécessaires doivent rester connectés.
+
+Une coupure d'alimentation ou un redémarrage du Raspberry Pi interrompt les sessions `tmux`.
+
+---
+
 ## ✅ Installation terminée
 
 Le Raspberry Pi Zero 2 W est maintenant prêt pour l'installation du client Proxmark3 Iceman.
 
-Le chapitre suivant expliquera comment installer les dépendances, récupérer les sources et compiler le logiciel.
+Nous disposons désormais :
+
+* D'un système Linux léger et à jour.
+* D'un accès distant via SSH.
+* D'une connexion Wi-Fi configurable.
+* De sessions persistantes avec `tmux`.
+* D'une commande simplifiée `pm` pour reprendre le travail après une déconnexion.
+
+➡️ [Chapitre 3 — Installation du Proxmark3 et mise à jour du firmware](03-installation-proxmark3.md)
