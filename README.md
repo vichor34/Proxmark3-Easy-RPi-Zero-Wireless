@@ -73,7 +73,7 @@ Commands are executed on the Raspberry Pi and transmitted to the Proxmark3.
 The tutorial is organized into several chapters:
 
 1. 📖 [Required Hardware and Connections](docs/en/01-hardware.md)
-2. ⏳ Raspberry Pi Installation
+2. 📖 [Raspberry Pi Installation](docs/en/02-raspberry-installation.md)
 3. ⏳ Proxmark3 Iceman Installation
 4. ⏳ Wi-Fi Configuration
 5. ⏳ Connecting from an iPhone
