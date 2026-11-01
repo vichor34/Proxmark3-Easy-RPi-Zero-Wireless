@@ -299,13 +299,28 @@ The authors are not responsible for any illegal or unauthorized use of the hardw
 
 ---
 
-## 📜 License
+## 📜 License and Usage
 
-This project is released under the MIT License.
+© 2026 Victor HANSEMANN.
 
-See the [LICENSE](LICENSE) file for details.
+The original documentation of this project is licensed under **Creative Commons BY-NC-SA 4.0** (Attribution-NonCommercial-ShareAlike).
 
----
+This license allows users to read, share, and adapt the documentation, subject to its terms.
+
+An **additional royalty-free permission** also allows organizations, businesses, and educational institutions to use and adapt the documentation for their internal purposes.
+
+Adaptations distributed under the Creative Commons license must comply with its ShareAlike requirements.
+
+Commercial exploitation of protected materials beyond the granted permissions requires a separate agreement.
+
+The documentation license does not, by itself, restrict the manufacture or sale of independent hardware using the technical knowledge described.
+
+### 📄 Licensing Documents
+
+- [CC BY-NC-SA 4.0 License](LICENSE)
+- [Additional Permissions](PERMISSIONS.md)
+- [Commercial Licensing](COMMERCIAL.md)
+- [Contributing Guidelines](CONTRIBUTING.md)---
 
 📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
 
