@@ -74,7 +74,7 @@ The tutorial is organized into several chapters:
 
 1. 📖 [Required Hardware and Connections](docs/en/01-hardware.md)
 2. 📖 [Raspberry Pi Installation](docs/en/02-raspberry-installation.md)
-3. ⏳ Proxmark3 Iceman Installation
+3. 📖 [Proxmark3 Iceman Installation](docs/en/03-proxmark3-installation.md)
 4. ⏳ Wi-Fi Configuration
 5. ⏳ Connecting from an iPhone
 6. ⏳ Using the Proxmark3
