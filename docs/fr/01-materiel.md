@@ -262,28 +262,11 @@ Avant de passer à l'étape suivante, assurez-vous que :
 
 ---
 
-## ✅ Étape 1 terminée — Matériel et branchements
-
-Le matériel nécessaire est maintenant identifié et le montage USB est prêt.
-
-Nous pouvons passer à l'installation et à la configuration du système d'exploitation du Raspberry Pi.
-
-Dans l'étape suivante, nous allons :
-
-- Installer Raspberry Pi OS Lite (64 bits).
-- Configurer la carte microSD.
-- Activer l'accès SSH.
-- Configurer la connexion Wi-Fi.
-- Effectuer le premier démarrage.
-- Vérifier le fonctionnement du système.
-
----
-
 ## 🧭 Navigation
 
-| 🏠 Sommaire | ➡️ Étape suivante |
-|---|---|
-| [Retour à l'accueil](../../README.fr.md) | [Étape 2 — Installation du Raspberry Pi](02-installation-raspberry.md) |
+| 🏠 Sommaire | ➡️ Étape suivante | 🌐 English |
+|---|---|---|
+| [Retour à l'accueil](../../README.fr.md) | [Étape 2 — Installation du Raspberry Pi](02-installation-raspberry.md) | [Step 1 — Required Hardware](../en/01-hardware.md) |
 
 ---
 
