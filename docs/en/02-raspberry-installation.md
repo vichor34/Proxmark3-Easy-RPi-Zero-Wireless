@@ -220,7 +220,7 @@ sudo apt update
 ### 📦 8.2 — Install Available Updates
 
 ```bash
-sudo apt full-upgrade -y
+sudo apt full-upgrade
 ```
 
 The update may take several minutes.
@@ -464,17 +464,13 @@ The tmux session ends when its last window and program have closed. **Closing** 
 
 The Raspberry Pi Zero 2 W is now ready for the **Proxmark3 Iceman** client installation. You have a lightweight Linux system, SSH remote access, configurable Wi-Fi, and persistent terminal sessions through `tmux` and the `pm` alias.
 
-### 🚀 In the Next Step
-
-We will install the required dependencies, download the Iceman source code, build and install the client, check communication with the Proxmark3 Easy, and cover firmware updates.
-
 ---
 
 ## 🧭 Navigation
 
-| ⬅️ Previous Step | 🏠 Table of Contents | ➡️ Next Step |
-|---|---|---|
-| [Step 1 — Hardware and Connections](01-hardware.md) | [Back to Home](../../README.md) | [Step 3 — Proxmark3 Iceman Installation](03-proxmark3-installation.md) |
+| ⬅️ Previous Step | 🏠 Table of Contents | ➡️ Next Step | 🌐 Français |
+|---|---|---|---|
+| [Step 1 — Hardware and Connections](01-hardware.md) | [Back to Home](../../README.md) | [Step 3 — Proxmark3 Iceman Installation](03-proxmark3-installation.md) | [Étape 2 — Installation du Raspberry Pi](../fr/02-installation-raspberry.md) |
 
 ---
 
