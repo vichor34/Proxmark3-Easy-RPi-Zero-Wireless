@@ -289,21 +289,28 @@ N'hésitez pas à ouvrir une *Issue* ou à proposer une *Pull Request*.
 
 ---
 
-## ⚠️ Avertissement
+## 📜 Licence et utilisation
 
-Ce projet est destiné à l'apprentissage, à la recherche en sécurité RFID et aux expérimentations sur des équipements personnels ou pour lesquels vous disposez d'une autorisation explicite.
+© 2026 Victor HANSEMANN.
 
-L'utilisation de ce matériel doit respecter les lois et réglementations applicables.
+La documentation originale de ce projet est distribuée sous licence **Creative Commons BY-NC-SA 4.0** (Attribution – Pas d'Utilisation Commerciale – Partage dans les Mêmes Conditions).
 
-Les auteurs ne sauraient être tenus responsables d'une utilisation illégale ou non autorisée du matériel et des informations présentées.
+Cette licence permet de consulter, partager et modifier la documentation, sous réserve de respecter ses conditions.
 
----
+Une **autorisation complémentaire gratuite** permet également l'utilisation et l'adaptation de la documentation pour les besoins internes des entreprises, associations et établissements d'enseignement.
 
-## 📜 Licence
+Les adaptations diffusées sous la licence Creative Commons doivent respecter les conditions de partage à l'identique.
 
-Ce projet est distribué sous licence MIT.
+Toute exploitation commerciale des contenus protégés dépassant les autorisations accordées nécessite un accord distinct.
 
-Consultez le fichier [LICENSE](LICENSE) pour plus d'informations.
+La licence documentaire ne restreint pas, à elle seule, la fabrication ou la vente de matériels indépendants utilisant les connaissances techniques présentées.
+
+### 📄 Documents de licence
+
+- [Licence CC BY-NC-SA 4.0](LICENSE)
+- [Autorisations complémentaires](PERMISSIONS.md)
+- [Conditions d'exploitation commerciale](COMMERCIAL.md)
+- [Contribuer au projet](CONTRIBUTING.md)
 
 ---
 
