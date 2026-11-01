@@ -267,23 +267,14 @@ The required hardware has now been identified, and the USB setup is ready.
 
 We can now proceed with installing and configuring the Raspberry Pi operating system.
 
-In the next step, we will:
-
-- Install Raspberry Pi OS Lite (64-bit).
-- Prepare and configure the microSD card.
-- Enable SSH access.
-- Configure Wi-Fi connectivity.
-- Perform the first boot.
-- Verify that the system is working correctly.
-
----
-
 ## 🧭 Navigation
 
-| 🏠 Table of Contents | ➡️ Next Step |
-|---|---|
-| [Back to Home](../../README.md) | [Step 2 — Raspberry Pi Installation](02-raspberry-installation.md) |
+| 🏠 Table of Contents | ➡️ Next Step | 🌐 Français |
+|---|---|---|
+| [Back to Home](../../README.md) | [Step 2 — Raspberry Pi Installation](02-raspberry-installation.md) | [Étape 1 — Matériel nécessaire](../fr/01-materiel.md) |
 
 ---
+
+📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
 
 📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
