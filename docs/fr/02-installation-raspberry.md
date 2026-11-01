@@ -353,7 +353,7 @@ Cette commande actualise la liste des logiciels disponibles dans les dépôts.
 Exécuter :
 
 ```bash
-sudo apt full-upgrade -y
+sudo apt full-upgrade
 ```
 
 Cette commande installe les mises à jour disponibles et gère les éventuelles modifications de dépendances.
@@ -787,25 +787,13 @@ Nous disposons désormais :
 - De sessions persistantes avec `tmux`.
 - D'une commande simplifiée `pm` pour reprendre le travail après une déconnexion.
 
-### 🚀 Dans l'étape suivante
-
-Nous allons :
-
-- Préparer le système pour Proxmark3 Iceman.
-- Installer les dépendances nécessaires.
-- Récupérer les sources du projet Iceman.
-- Compiler les outils nécessaires.
-- Installer le client Proxmark3.
-- Vérifier la communication avec le matériel.
-- Aborder la mise à jour du firmware.
-
 ---
 
 ## 🧭 Navigation
 
-| ⬅️ Étape précédente | 🏠 Sommaire | ➡️ Étape suivante |
-|---|---|---|
-| [Étape 1 — Matériel et branchements](01-materiel.md) | [Retour à l'accueil](../../README.fr.md) | [Étape 3 — Installation de Proxmark3 Iceman](03-installation-proxmark3.md) |
+| ⬅️ Étape précédente | 🏠 Sommaire | ➡️ Étape suivante | 🌐 English |
+|---|---|---|---|
+| [Étape 1 — Matériel et branchements](01-materiel.md) | [Retour à l'accueil](../../README.fr.md) | [Étape 3 — Installation de Proxmark3 Iceman](03-installation-proxmark3.md) | [Step 2 — Raspberry Pi Installation](../en/02-raspberry-installation.md) |
 
 ---
 
