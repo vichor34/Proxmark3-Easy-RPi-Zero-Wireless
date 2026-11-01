@@ -1,77 +1,88 @@
-# 💻 Installing Raspberry Pi OS
+# 💻 Step 2 — Raspberry Pi Installation and Configuration
 
 🌐 **Language:** [🇫🇷 Français](../fr/02-installation-raspberry.md) | 🇬🇧 English
 
-[🏠 Back to Home](../../README.md)
+[🏠 Back to Table of Contents](../../README.md)
 
 ---
 
-## 1. Overview
+## 📖 Introduction
 
-This chapter explains how to install and configure Raspberry Pi OS on a Raspberry Pi Zero 2 W for use with the Proxmark3 Easy.
+This chapter explains how to install and configure **Raspberry Pi OS** on a **Raspberry Pi Zero 2 W** for use with the **Proxmark3 Easy**. The installation is performed *headlessly*, without a monitor, keyboard, or mouse. You will manage the Raspberry Pi remotely over **Wi-Fi and SSH**.
 
-The installation is performed without a monitor, keyboard, or mouse. The Raspberry Pi will be managed remotely using SSH.
+We will also install **tmux**, which keeps terminal sessions running when an SSH connection drops.
 
-### Reference Configuration
+### 🎯 Objectives
 
-| Component           | Configuration        |
-| ------------------- | -------------------- |
-| Raspberry Pi        | Zero 2 W             |
-| Operating System    | Raspberry Pi OS Lite |
-| Architecture        | 64-bit               |
-| Debian Base         | Debian 13 (Trixie)   |
-| Desktop Environment | None                 |
-| Network Manager     | NetworkManager       |
-| Remote Access       | SSH                  |
-| Persistent Sessions | tmux                 |
+By the end of this chapter, you will be able to:
 
-This configuration matches the system used in this project.
+- Install Raspberry Pi OS Lite (64-bit) using Raspberry Pi Imager.
+- Set the hostname, user account, Wi-Fi, and SSH access.
+- Update the operating system and check network services.
+- Save additional Wi-Fi networks using NetworkManager.
+- Install `tmux` and create the `pm` shortcut for persistent sessions.
+
+---
+
+## 1. Reference Configuration
+
+| Item | Configuration |
+|---|---|
+| Raspberry Pi | Zero 2 W |
+| Operating system | Raspberry Pi OS Lite |
+| Architecture | 64-bit |
+| Debian base | Debian 13 (Trixie) |
+| Desktop environment | None |
+| Network manager | NetworkManager |
+| Network | 2.4 GHz Wi-Fi |
+| Remote access | SSH |
+| Persistent terminal sessions | tmux |
+| Example hostname | `proxmark` |
+| Example username | `piuser` |
+
+> 💡 **Note**
+>
+> This is the reference configuration used in this project. If you choose a different hostname or username, adapt the commands accordingly. Raspberry Pi OS releases may change over time; check the version installed on your device.
 
 ---
 
 ## 2. Download Raspberry Pi Imager
 
-Download and install **Raspberry Pi Imager**, the official tool for preparing Raspberry Pi operating system images.
+**Raspberry Pi Imager** is the official tool for writing Raspberry Pi operating systems to microSD cards. It also allows you to preconfigure Wi-Fi, a user account, and SSH before the first boot.
 
 🔗 [Download Raspberry Pi Imager](https://www.raspberrypi.com/software/)
 
-Insert the microSD card into your computer.
-
-A microSD card with at least 16 GB of storage is recommended.
+Install the application on your computer, then insert a microSD card. **16 GB or more** is recommended.
 
 ---
 
 ## 3. Prepare the microSD Card
 
-Launch Raspberry Pi Imager.
+Open **Raspberry Pi Imager**.
 
-### Step 1 — Select Your Device
+### 🔧 3.1 — Select the Device
 
-Choose:
+Choose **Raspberry Pi Zero 2 W**.
 
-**Raspberry Pi Zero 2 W**
+### 💻 3.2 — Select the Operating System
 
-### Step 2 — Select the Operating System
+Choose **Raspberry Pi OS Lite (64-bit)**. This edition has no graphical desktop and is suitable for remote administration, with lower resource requirements than a desktop edition. The Proxmark3 Iceman client runs in a Linux terminal.
 
-Choose:
+### 💾 3.3 — Select Storage
 
-**Raspberry Pi OS Lite (64-bit)**
+Select the intended microSD card.
 
-This version does not include a graphical desktop and is ideal for remote operation.
-
-### Step 3 — Select Storage
-
-Select your microSD card.
-
-⚠️ Warning: all existing data on the card will be erased.
+> ⚠️ **Warning**
+>
+> Writing the image **erases all data** on the selected card. Double-check the target device before proceeding.
 
 ---
 
 ## 4. Initial Configuration
 
-Before writing the image, Raspberry Pi Imager allows you to customize the operating system.
+Before writing the image, use Raspberry Pi Imager's OS customization settings to prepare a headless installation.
 
-### Hostname
+### 🖥️ 4.1 — Hostname
 
 Set the hostname to:
 
@@ -79,272 +90,277 @@ Set the hostname to:
 proxmark
 ```
 
-The Raspberry Pi should then be accessible on the local network using:
+On networks that support mDNS, the Raspberry Pi may then be reachable as:
 
 ```text
 proxmark.local
 ```
 
-Hostname resolution depends on mDNS support on the network and client device.
+> 💡 **Note**
+>
+> `.local` resolution depends on mDNS support on both the network and your client device. If it fails, use the Raspberry Pi's IP address instead.
 
-### User Account
+### 👤 4.2 — User Account
 
-Create a user account and choose a secure password.
-
-In this tutorial, we will use:
+Create a user and set a **strong password**. The example username used throughout this tutorial is:
 
 ```text
 piuser
 ```
 
-You may choose a different username.
+You may use another username, but remember to adjust all SSH commands.
 
-### Wi-Fi Configuration
+> ⚠️ **Security**
+>
+> Do not leave the account without a password or reuse a weak password.
 
-Enter:
+### 📶 4.3 — Wi-Fi Configuration
 
-* Your Wi-Fi network name (SSID).
-* Your Wi-Fi password.
-* Wireless LAN country: France (FR).
+Enter the following settings:
 
-The Raspberry Pi Zero 2 W supports 2.4 GHz Wi-Fi. Make sure your network is compatible.
+| Setting | Value |
+|---|---|
+| SSID | Your Wi-Fi network name |
+| Password | Your Wi-Fi password |
+| Wireless LAN country | France (FR), or your actual country |
 
-### Enable SSH
+The Raspberry Pi Zero 2 W supports **2.4 GHz Wi-Fi**. Make sure that band is enabled on your router. If your router combines 2.4 GHz and 5 GHz under one SSID, the Raspberry Pi will use its supported band.
 
-In Raspberry Pi Imager settings:
+### 🔐 4.4 — Enable SSH
 
-1. Enable SSH.
-2. Select password authentication for the initial setup.
-3. Make sure the user account has a secure password.
+In Raspberry Pi Imager:
 
-SSH key authentication can be configured later for improved security.
+1. Enable **SSH**.
+2. Choose **password authentication** for the initial setup.
+3. Confirm that the user account has a strong password.
+4. Save the customization settings.
+
+SSH public-key authentication can be configured later for stronger security.
+
+> 💡 **Why SSH?**
+>
+> SSH lets you install software, change settings, and operate the Proxmark3 from a computer or smartphone without attaching a display to the Raspberry Pi.
 
 ---
 
 ## 5. Write the microSD Card
 
-Once configuration is complete:
-
 1. Start writing the image.
-2. Wait for the process to finish.
-3. Allow Raspberry Pi Imager to verify the installation.
-4. Safely remove the microSD card.
+2. Confirm that the selected card may be erased.
+3. Wait until writing finishes.
+4. Allow Raspberry Pi Imager to verify the written data.
+5. Safely eject the microSD card.
 
 ---
 
 ## 6. First Boot
 
-1. Insert the microSD card into the Raspberry Pi Zero 2 W.
-2. Connect the power supply.
-3. Wait a few minutes for the first boot to complete.
+### 🔌 6.1 — Power On
 
-The Raspberry Pi should automatically connect to the configured Wi-Fi network.
+1. Insert the microSD card into the Raspberry Pi Zero 2 W.
+2. Check the wiring described in Step 1.
+3. Connect the power supply.
+4. Wait a few minutes for the initial boot.
+
+The Raspberry Pi should connect automatically to the configured Wi-Fi network. The first boot may take longer than subsequent boots.
+
+### 📶 6.2 — Check Network Connectivity
+
+Look for a device named `proxmark` in your router's administration interface. Note its local IP address in case `proxmark.local` cannot be resolved.
 
 ---
 
 ## 7. First SSH Connection
 
-From a computer connected to the same network, open a terminal.
+### 💻 7.1 — Open a Terminal
 
-On Windows, use PowerShell.
+On Windows, open **PowerShell**. On Linux or macOS, open a terminal. Your computer must be able to reach the Raspberry Pi over the network.
 
-Run:
+### 🔐 7.2 — Connect
 
 ```bash
 ssh piuser@proxmark.local
 ```
 
-Replace `piuser` with the username selected during setup.
+Replace `piuser` if you selected a different username. On first connection, verify that the SSH host key belongs to your Raspberry Pi before accepting it. Enter the account password when prompted.
 
-On the first connection, verify that you are connecting to your Raspberry Pi before accepting the SSH host key.
-
-Enter your password.
-
-A successful connection should display a prompt similar to:
+A successful login displays a prompt similar to:
 
 ```text
 piuser@proxmark:~ $
 ```
 
-The Raspberry Pi can now be managed remotely.
+### 🔍 7.3 — Troubleshooting
 
-### Troubleshooting SSH
-
-If `proxmark.local` does not resolve:
-
-1. Verify that the Raspberry Pi is connected to Wi-Fi.
-2. Find its IP address in your router's administration interface.
-3. Connect directly using its IP address:
+If `proxmark.local` does not resolve, find the Pi's IP address in your router and connect directly:
 
 ```bash
 ssh piuser@192.168.1.100
 ```
 
-Replace `192.168.1.100` with the actual IP address of your Raspberry Pi.
+`192.168.1.100` is **only an example**; replace it with the real address.
+
+| Error | Possible cause | Check |
+|---|---|---|
+| `Could not resolve hostname` | mDNS name unavailable | Use the IP address |
+| `Connection refused` | SSH not listening | Check that SSH was enabled |
+| `Connection timed out` | Network or address problem | Check Wi-Fi and the IP address |
+| `Permission denied` | Incorrect credentials | Check username and password |
 
 ---
 
 ## 8. Update the System
 
-Once connected via SSH, update the package lists:
+### 🔄 8.1 — Refresh Package Lists
 
 ```bash
 sudo apt update
 ```
 
-Then upgrade installed packages:
+### 📦 8.2 — Install Available Updates
 
 ```bash
 sudo apt full-upgrade -y
 ```
 
-Reboot if necessary:
+The update may take several minutes.
+
+### 🔁 8.3 — Reboot if Necessary
 
 ```bash
 sudo reboot
 ```
 
-Wait for the Raspberry Pi to restart before reconnecting.
+SSH will disconnect while the Pi reboots. Wait for it to come back, then reconnect:
+
+```bash
+ssh piuser@proxmark.local
+```
 
 ---
 
 ## 9. Verify the Installation
 
-### Operating System Version
+### 🔍 9.1 — Operating System Version
 
 ```bash
 cat /etc/os-release
 ```
 
-The reference setup uses Debian 13 (Trixie).
+The reference installation uses **Debian GNU/Linux 13 (Trixie)**.
 
-### System Architecture
+### 🔍 9.2 — System Architecture
 
 ```bash
 uname -m
 ```
 
-Expected output:
+Expected output for the 64-bit system:
 
 ```text
 aarch64
 ```
 
-This indicates a 64-bit ARM operating system.
-
-### Network Status
+### 📶 9.3 — Network Status
 
 ```bash
 nmcli device status
 ```
 
-The `wlan0` interface should be connected.
+The Wi-Fi interface `wlan0` should normally show as connected.
 
-### SSH Status
+### 🔐 9.4 — SSH Service
 
 ```bash
 systemctl status ssh
 ```
 
-The SSH service should be active (`active (running)`).
+The service should show `active (running)`. Press `Q` to exit the status display.
 
 ---
 
 ## 10. Add a Secondary Wi-Fi Network
 
-Multiple Wi-Fi networks can be saved.
+The Raspberry Pi can save multiple Wi-Fi connections—for example, a home network, an office network, or a smartphone hotspot.
 
-To connect to another network:
+### 📶 10.1 — Add a Network
 
 ```bash
 sudo nmcli device wifi connect "WIFI_NAME" --ask
 ```
 
-NetworkManager will prompt for the password if required.
+Replace `WIFI_NAME` with the SSID. NetworkManager will request the password if needed.
 
-⚠️ Warning: this command may interrupt your current SSH session if the Raspberry Pi immediately switches networks.
+> ⚠️ **Warning**
+>
+> Connecting to another network can immediately interrupt your current SSH session. Make sure you can discover the Raspberry Pi's new IP address before switching.
 
-To list saved connections:
+### 🔍 10.2 — List Saved Connections
 
 ```bash
 nmcli connection show
 ```
 
-The Raspberry Pi can reconnect to saved networks when they become available, depending on NetworkManager priorities and settings.
+NetworkManager can reconnect to saved networks when they become available. Selection depends on network availability, connection settings, and priorities. Your SSH device must be able to reach the Pi on the chosen network.
 
 ---
 
-## 11. Keep Terminal Sessions Running with tmux
+## 11. Keep a Terminal Session Running with tmux
 
-When accessing the Raspberry Pi remotely, SSH connections may be interrupted if:
+### 📖 Introduction
 
-* The computer enters sleep mode.
-* The Wi-Fi connection drops.
-* The terminal is accidentally closed.
-* The user switches networks or devices.
+An SSH connection may drop when a laptop sleeps, Wi-Fi disconnects, a terminal closes, or you switch devices. Programs running directly in that SSH terminal may then stop.
 
-Without additional protection, programs running in the terminal may be interrupted.
+**tmux** keeps a terminal session running on the Raspberry Pi independently of your SSH connection. It is useful for long builds, Proxmark3 Iceman operations, and switching between a computer and a phone.
 
-**tmux** allows terminal sessions to remain active on the Raspberry Pi independently of the SSH connection.
+> 💡 **Important**
+>
+> `tmux` preserves the programs running inside its session; it **does not** keep the SSH connection itself alive.
 
-This is especially useful when compiling Proxmark3 Iceman firmware or running long operations.
-
-### 11.1 Install tmux
-
-From your SSH terminal:
+### 🛠️ 11.1 — Install tmux
 
 ```bash
 sudo apt update
 sudo apt install tmux -y
 ```
 
-Verify the installation:
+Verify the installed version:
 
 ```bash
 tmux -V
 ```
 
-The installed version should be displayed.
-
-### 11.2 Create a Session
-
-Run:
+### 💻 11.2 — Create a Session
 
 ```bash
 tmux new -s proxmark
 ```
 
-A new session named `proxmark` is created.
-
-You can now execute commands inside this session, for example:
+This creates a session named `proxmark`. You can run terminal commands inside it, including the Proxmark3 client after Step 3:
 
 ```bash
 pm3
 ```
 
-The `pm3` command becomes available after installing the Iceman client, as described in Chapter 3.
+> ⚠️ **Note**
+>
+> The `pm3` command is not available until the Proxmark3 Iceman client has been installed in Step 3. It is normal for this command to fail at this point.
 
-### 11.3 Detach from a Session
-
-To leave the session without stopping its programs:
+### 🔌 11.3 — Detach Without Stopping Programs
 
 1. Press `Ctrl + B`.
-2. Release both keys.
+2. Release the keys.
 3. Press `D`.
 
-You will return to the regular SSH terminal.
+You return to the regular SSH shell while programs inside the tmux session continue running.
 
-Programs running inside `tmux` continue running on the Raspberry Pi.
+### 🔄 11.4 — Reattach to a Session
 
-### 11.4 Reattach to a Session
-
-After reconnecting through SSH:
+After reconnecting over SSH:
 
 ```bash
 tmux attach -t proxmark
 ```
-
-This command restores the previous session.
 
 To list existing sessions:
 
@@ -352,95 +368,114 @@ To list existing sessions:
 tmux ls
 ```
 
-### 11.5 Simplify Access with the `pm` Command
+### ⚡ 11.5 — Create the `pm` Shortcut
 
-Instead of typing a long command every time, we can create a Bash alias.
-
-Run:
+To create or reattach to the `proxmark` session with one command, add a Bash alias:
 
 ```bash
 echo "alias pm='tmux new-session -A -s proxmark'" >> ~/.bashrc
 ```
 
-Reload the configuration:
+Reload the Bash configuration:
 
 ```bash
 source ~/.bashrc
 ```
 
-From now on, you only need:
+Then run:
 
 ```bash
 pm
 ```
 
-The behavior is automatic:
+| Situation | Result |
+|---|---|
+| Session `proxmark` already exists | Reattach to it |
+| No `proxmark` session exists | Create a new one |
 
-* If the `proxmark` session already exists, it is restored.
-* If no session exists, a new one is created.
+The alias is available in future SSH logins that use Bash. The `-A` option enables the create-or-attach behavior.
 
-The alias will be available in future SSH sessions using Bash.
+> 💡 **Tip**
+>
+> Add the alias only once. Repeating the `echo` command appends duplicate definitions to `~/.bashrc`.
 
-### 11.6 Daily Usage
+### 📱 11.6 — Everyday Workflow
 
-The workflow becomes very simple.
-
-**1. Connect to the Raspberry Pi:**
+**1. Connect over SSH:**
 
 ```bash
 ssh piuser@proxmark.local
 ```
 
-**2. Open or restore your session:**
+**2. Create or recover the session:**
 
 ```bash
 pm
 ```
 
-**3. Launch Proxmark3:**
+**3. Start Proxmark3 after installing Iceman in Step 3:**
 
 ```bash
 pm3
 ```
 
-**4. To detach without stopping programs:**
+**4. Temporarily leave the session:** press `Ctrl + B`, release, then press `D`.
 
-Press `Ctrl + B`, then `D`.
+The next time you connect, use `pm` to return to the existing session.
 
-The next time you connect, simply type `pm` to restore your session.
+### 🛑 11.7 — Close a Session Permanently
 
-### 11.7 Close a Session Permanently
-
-To close a session, first exit any running applications, then execute:
+Exit any running application, then run:
 
 ```bash
 exit
 ```
 
-The `tmux` session ends when no windows or programs remain active.
+The tmux session ends when its last window and program have closed. **Closing** a session is different from **detaching**: a closed session cannot be recovered.
 
-### 11.8 Important Limitations
+### ⚠️ 11.8 — Important Limitations
 
-**tmux does not keep the SSH connection itself alive.**
+- The Raspberry Pi must remain powered on.
+- Required USB peripherals must remain connected.
+- The program must have been started **inside** tmux.
+- The tmux session must not be closed.
+- A reboot or power failure terminates tmux sessions.
 
-It keeps programs running on the Raspberry Pi when the SSH connection is interrupted.
-
-The Raspberry Pi must remain powered on, and any required USB devices must remain connected.
-
-Power loss or a Raspberry Pi reboot will terminate existing `tmux` sessions.
+`tmux` is especially recommended for long Proxmark3 operations and when Wi-Fi connectivity may be interrupted.
 
 ---
 
-## ✅ Installation Complete
+## 12. Checklist Before Continuing
 
-The Raspberry Pi Zero 2 W is now ready for the Proxmark3 Iceman client installation.
+- [ ] Raspberry Pi OS Lite (64-bit) is installed.
+- [ ] The Raspberry Pi boots successfully.
+- [ ] Wi-Fi is connected.
+- [ ] `proxmark.local` or the Pi's IP address is reachable.
+- [ ] SSH login works.
+- [ ] System updates are installed.
+- [ ] `uname -m` reports `aarch64`.
+- [ ] NetworkManager and SSH are working.
+- [ ] `tmux` is installed.
+- [ ] The `pm` command creates or reattaches to a session.
 
-We now have:
+---
 
-* A lightweight, updated Linux system.
-* Remote access through SSH.
-* Configurable Wi-Fi connectivity.
-* Persistent terminal sessions using `tmux`.
-* A simplified `pm` command to resume work after disconnection.
+## ✅ Step 2 Complete — Raspberry Pi Configured
 
-➡️ [Chapter 3 — Proxmark3 Installation and Firmware Update](03-proxmark3-installation.md)
+The Raspberry Pi Zero 2 W is now ready for the **Proxmark3 Iceman** client installation. You have a lightweight Linux system, SSH remote access, configurable Wi-Fi, and persistent terminal sessions through `tmux` and the `pm` alias.
+
+### 🚀 In the Next Step
+
+We will install the required dependencies, download the Iceman source code, build and install the client, check communication with the Proxmark3 Easy, and cover firmware updates.
+
+---
+
+## 🧭 Navigation
+
+| ⬅️ Previous Step | 🏠 Table of Contents | ➡️ Next Step |
+|---|---|---|
+| [Step 1 — Hardware and Connections](01-hardware.md) | [Back to Home](../../README.md) | [Step 3 — Proxmark3 Iceman Installation](03-proxmark3-installation.md) |
+
+---
+
+📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
