@@ -362,11 +362,17 @@ Exécutez :
 pm
 ```
 
-Puis :
+Si le client Iceman n'est pas déjà actif dans la session tmux, lancez-le :
 
 ```bash
 pm3
 ```
+
+> 💡 **Remarque**
+>
+> Si `pm` vous reconnecte à une session tmux dans laquelle Iceman fonctionne déjà, ne lancez pas une seconde instance du client.
+>
+> Vous pouvez directement reprendre votre travail.
 
 Vous pouvez maintenant utiliser les commandes Iceman.
 
@@ -531,6 +537,14 @@ NetworkManager vous demandera le mot de passe si nécessaire.
 >
 > Effectuez cette opération lorsque vous pouvez retrouver l'adresse du Raspberry Pi sur le nouveau réseau.
 
+> 💡 **Conseil pour la première configuration**
+>
+> Si possible, effectuez cette opération avec un accès local au Raspberry Pi (écran et clavier) ou une solution de connexion de secours.
+>
+> En effet, lorsque le Raspberry Pi quitte le Wi-Fi domestique pour rejoindre le partage de connexion de l'iPhone, votre session SSH peut être interrompue.
+>
+> Avant de partir en déplacement, vérifiez que le Raspberry Pi peut se reconnecter automatiquement au réseau enregistré.
+
 ### 🔍 7.3 — Vérifier la connexion
 
 Une fois le Raspberry Pi connecté au partage de connexion, recherchez son adresse IP.
@@ -611,6 +625,14 @@ sudo nmcli device wifi connect "NOM_DU_RESEAU_ANDROID" --ask
 Remplacez le nom du réseau par celui de votre point d'accès Android.
 
 Saisissez le mot de passe demandé.
+
+> ⚠️ **Attention**
+>
+> Si vous configurez ce réseau depuis une connexion SSH utilisant le Wi-Fi domestique, celle-ci peut être interrompue lorsque le Raspberry Pi rejoint le point d'accès Android.
+>
+> Prévoyez un moyen de retrouver son adresse IP ou un accès local avant de changer de réseau.
+>
+> Testez également la reconnexion automatique avant une utilisation en déplacement.
 
 ### 🔍 8.4 — Retrouver l'adresse IP
 
@@ -964,18 +986,6 @@ Grâce au Raspberry Pi Zero 2 W, le Proxmark3 Easy peut être piloté à distanc
 
 Les sessions tmux permettent de conserver un environnement de travail persistant et de passer d'un appareil à un autre.
 
-### 🚀 Dans la prochaine étape
-
-Nous aborderons la maintenance de notre installation :
-
-- Sauvegarder les fichiers importants.
-- Mettre à jour Raspberry Pi OS.
-- Mettre à jour le client Iceman.
-- Préparer une mise à jour du firmware.
-- Vérifier les versions et la compatibilité.
-- Diagnostiquer les problèmes avancés.
-- Restaurer une installation précédente si nécessaire.
-
 ---
 
 ## 📚 Références
@@ -991,13 +1001,9 @@ Nous aborderons la maintenance de notre installation :
 
 ## 🧭 Navigation
 
-| ⬅️ Étape précédente | 🏠 Sommaire | 🌐 English |
-|---|---|---|
-| [Étape 4 — Utilisation quotidienne](04-utilisation-quotidienne.md) | [Retour à l'accueil](../../README.fr.md) | [Step 5 — Mobile Connection](../en/05-mobile-connection.md) |
-
-> 💡 **Navigation provisoire**
->
-> Les liens de navigation seront harmonisés lorsque toutes les pages du tutoriel auront été créées.
+| ⬅️ Étape précédente | 🏠 Sommaire | ➡️ Étape suivante | 🌐 English |
+|---|---|---|---|
+| [Étape 4 — Utilisation quotidienne](04-utilisation-quotidienne.md) | [Retour à l'accueil](../../README.fr.md) | [Étape 6 — Maintenance et sauvegardes](06-maintenance.md) | [Step 5 — Mobile Connection](../en/05-mobile-connection.md) |
 
 ---
 
