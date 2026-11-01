@@ -330,9 +330,15 @@ pm
 
 **3. Lancement du client Iceman :**
 
+Si le client Iceman n'est pas déjà actif dans la session tmux :
+
 ```bash
 pm3
 ```
+
+> 💡 **Remarque**
+>
+> Si `pm` vous reconnecte à une session dans laquelle Iceman fonctionne déjà, ne lancez pas une seconde instance du client.
 
 Vous pouvez maintenant utiliser les commandes Proxmark3.
 
@@ -895,17 +901,6 @@ Nous savons :
 - Résoudre les problèmes de connexion les plus courants.
 - Arrêter correctement le Raspberry Pi.
 
-### 🚀 Dans la prochaine étape
-
-Nous verrons comment utiliser exactement la même installation depuis un appareil mobile :
-
-- **iPhone et iPad (Apple / iOS / iPadOS).**
-- **Smartphones et tablettes Android.**
-
-Nous expliquerons comment installer un client SSH adapté, enregistrer une connexion au Raspberry Pi et utiliser le Proxmark3 depuis un terminal mobile.
-
-L'objectif sera de disposer d'un **Proxmark3 Easy sans fil, pilotable depuis un smartphone**, sans modifier le matériel.
-
 ---
 
 ## 📚 Références
@@ -919,13 +914,9 @@ L'objectif sera de disposer d'un **Proxmark3 Easy sans fil, pilotable depuis un 
 
 ## 🧭 Navigation
 
-| ⬅️ Étape précédente | 🏠 Sommaire | 🌐 English |
-|---|---|---|
-| [Étape 3 — Installation de Proxmark3 Iceman](03-installation-proxmark3.md) | [Retour à l'accueil](../../README.fr.md) | [Step 4 — Daily Usage](../en/04-daily-usage.md) |
-
-> 💡 **Navigation provisoire**
->
-> Les liens de navigation vers les chapitres suivants seront harmonisés lorsque toutes les pages du tutoriel auront été créées.
+| ⬅️ Étape précédente | 🏠 Sommaire | ➡️ Étape suivante | 🌐 English |
+|---|---|---|---|
+| [Étape 3 — Installation de Proxmark3 Iceman](03-installation-proxmark3.md) | [Retour à l'accueil](../../README.fr.md) | [Étape 5 — Connexion mobile](05-connexion-mobile.md) | [Step 4 — Daily Usage](../en/04-daily-usage.md) |
 
 ---
 
