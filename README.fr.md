@@ -73,7 +73,7 @@ Les commandes sont exécutées sur le Raspberry Pi, puis transmises au Proxmark3
 Le tutoriel est organisé en plusieurs chapitres :
 
 1. 📖 [Matériel nécessaire et branchements](docs/fr/01-materiel.md)
-2. ⏳ Installation du Raspberry Pi
+2. 📖 [Installation du Raspberry Pi](docs/fr/02-installation-raspberry.md)
 3. ⏳ Installation du Proxmark3 Iceman
 4. ⏳ Configuration du Wi-Fi
 5. ⏳ Connexion depuis un iPhone
