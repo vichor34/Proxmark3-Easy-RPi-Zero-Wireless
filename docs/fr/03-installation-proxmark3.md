@@ -1,161 +1,544 @@
-# 03 — Installer et mettre à jour Proxmark3 Iceman
+# 🔧 Installation de Proxmark3 Iceman
 
-[English version](../en/03-proxmark3-installation.md)
+🌐 **Langue :** 🇫🇷 Français | [🇬🇧 English](../en/03-proxmark3-installation.md)
 
-Ce chapitre explique comment compiler et utiliser le firmware **Iceman (RfidResearchGroup)** sur un **Proxmark3 Easy** relié en USB à un **Raspberry Pi Zero 2 W** (Raspberry Pi OS Lite 64 bits). Il décrit aussi une mise à jour prudente d'une installation existante, **sans écraser le bootloader**.
+[🏠 Retour à l'accueil](../../README.fr.md)
 
-> **Attention :** le flashage comporte un risque de rendre le Proxmark3 inutilisable si le mauvais firmware ou les mauvais paramètres sont employés. Vérifiez votre modèle avant toute écriture. Ne débranchez pas l'appareil pendant le flashage.
+---
 
-## 1. Vérifier la connexion USB
+## 1. Présentation
 
-Branchez le Proxmark3 Easy sur le port USB de données du Raspberry Pi, avec un adaptateur OTG et une alimentation adaptés.
+Ce chapitre explique comment installer, compiler et mettre à jour le firmware **Proxmark3 Iceman** sur un Raspberry Pi Zero 2 W.
+
+Le Proxmark3 Easy est connecté au Raspberry Pi par USB. Son interface de commande est accessible à distance via SSH.
+
+La procédure présentée a été testée sur le matériel utilisé dans ce projet.
+
+### Configuration de référence
+
+| Élément               | Configuration                   |
+| --------------------- | ------------------------------- |
+| Raspberry Pi          | Zero 2 W                        |
+| Système               | Raspberry Pi OS Lite 64 bits    |
+| Architecture          | ARM64 / aarch64                 |
+| Proxmark3             | Easy                            |
+| Microcontrôleur       | AT91SAM7S512                    |
+| Mémoire flash interne | 512 Ko                          |
+| FPGA                  | Xilinx XC2S30                   |
+| Firmware              | Iceman — RfidResearchGroup      |
+| Connexion             | USB via adaptateur OTG alimenté |
+| Accès distant         | SSH                             |
+
+### Objectifs
+
+Nous allons :
+
+1. Vérifier la connexion USB.
+2. Installer les outils nécessaires.
+3. Télécharger le firmware Iceman.
+4. Configurer la compilation pour le Proxmark3 Easy.
+5. Compiler le client et le firmware.
+6. Sauvegarder une éventuelle ancienne installation.
+7. Flasher le nouveau firmware.
+8. Vérifier son fonctionnement.
+9. Simplifier le lancement du client.
+
+> ⚠️ **Attention :** le flashage comporte un risque si un firmware incompatible est utilisé. Vérifiez votre modèle et ne débranchez jamais le Proxmark3 pendant l'écriture.
+
+---
+
+## 2. Vérifier la connexion USB
+
+Le Proxmark3 Easy doit être relié au port USB de données du Raspberry Pi Zero 2 W.
+
+Le branchement est détaillé dans le [chapitre 1 — Matériel nécessaire et branchements](01-materiel.md).
+
+### Détecter le périphérique
+
+Depuis le terminal SSH :
 
 ```bash
-ls -l /dev/ttyACM*
+lsusb
 ```
 
-Dans notre installation, le Proxmark3 apparaît sous `/dev/ttyACM0`. Le numéro peut varier.
+Puis :
 
-## 2. Installer les outils de compilation
+```bash
+ls /dev/ttyACM*
+```
 
-Mettez le système à jour et installez les outils principaux :
+Dans notre installation, le Proxmark3 apparaît sous :
+
+```text
+/dev/ttyACM0
+```
+
+Le numéro du périphérique peut varier selon les équipements connectés.
+
+Si aucun périphérique n'apparaît, vérifier le câble USB, l'adaptateur OTG et l'alimentation.
+
+---
+
+## 3. Installer les outils nécessaires
+
+La compilation d'Iceman nécessite plusieurs outils de développement.
+
+### Mettre à jour le système
 
 ```bash
 sudo apt update
+```
+
+### Installer les dépendances
+
+```bash
 sudo apt install -y git build-essential make gcc-arm-none-eabi \
   libreadline-dev libusb-0.1-4-dev libpcsclite-dev pkg-config \
   libbz2-dev liblz4-dev libssl-dev python3 python3-dev
 ```
 
-La liste exacte des dépendances peut évoluer avec Iceman. Consultez les instructions de compilation du dépôt officiel si `make` signale une bibliothèque manquante.
+Les dépendances peuvent évoluer avec les nouvelles versions d'Iceman.
 
-## 3. Télécharger Iceman
+Si la compilation signale une bibliothèque manquante, consulter les instructions du dépôt officiel.
 
-Pour une **première installation**, utilisez un dossier `~/proxmark3-new` :
+### Vérifier le compilateur ARM
+
+```bash
+arm-none-eabi-gcc --version
+```
+
+Le compilateur doit afficher sa version.
+
+---
+
+## 4. Télécharger Proxmark3 Iceman
+
+Le firmware utilisé est développé et maintenu par la communauté **RfidResearchGroup**.
+
+🔗 [Dépôt officiel Proxmark3 Iceman](https://github.com/RfidResearchGroup/proxmark3)
+
+### Télécharger le code source
+
+Depuis le dossier personnel :
 
 ```bash
 cd ~
+```
+
+Cloner le dépôt :
+
+```bash
 git clone https://github.com/RfidResearchGroup/proxmark3.git proxmark3-new
+```
+
+Entrer dans le dossier :
+
+```bash
 cd ~/proxmark3-new
 ```
 
-Pour une **mise à jour d'une installation existante**, conservez l'ancien dossier `~/proxmark3` et clonez le nouveau dépôt séparément. Cela permet de revenir aux anciens fichiers si nécessaire.
-
-Dans notre installation testée, le nouveau code correspondait au commit `754bbae3d` (30 octobre 2026). Les versions ultérieures peuvent présenter des différences.
-
-## 4. Configurer le Proxmark3 Easy
-
-Créez le fichier `Makefile.platform` à la racine du nouveau dépôt :
+### Vérifier la version téléchargée
 
 ```bash
-cat > Makefile.platform <<'EOF_CONFIG'
+git log -1 --oneline
+```
+
+Cette commande affiche le dernier commit du dépôt.
+
+### Version utilisée pour ce projet
+
+Notre installation a été réalisée avec le commit :
+
+```text
+754bbae3d
+```
+
+Daté du 30 octobre 2026.
+
+Les versions ultérieures peuvent présenter des différences.
+
+> 💡 **Conseil :** si une ancienne installation existe déjà dans `~/proxmark3`, conserver ce dossier et utiliser `~/proxmark3-new` pour la nouvelle version.
+
+---
+
+## 5. Configurer le Proxmark3 Easy
+
+Le firmware doit être compilé pour le matériel utilisé.
+
+### Créer le fichier de configuration
+
+Depuis le dossier du projet :
+
+```bash
+cd ~/proxmark3-new
+```
+
+Créer le fichier `Makefile.platform` :
+
+```bash
+cat > Makefile.platform <<'EOF'
 PLATFORM=PM3GENERIC
 LED_ORDER=PM3EASY
-EOF_CONFIG
+EOF
 ```
 
-Ces paramètres correspondent au **Proxmark3 Easy générique** utilisé dans ce projet (microcontrôleur AT91SAM7S512 et FPGA `xc2s30`). **Ne copiez pas ces réglages sur un autre modèle sans vérification.**
+### Explication des paramètres
 
-Notre compilation n'activait pas `PLATFORM_EXTRAS=FLASH`, même si le matériel détectait une mémoire flash externe.
+| Paramètre | Valeur     | Description                             |
+| --------- | ---------- | --------------------------------------- |
+| PLATFORM  | PM3GENERIC | Plateforme Proxmark3 générique          |
+| LED_ORDER | PM3EASY    | Configuration des LED du Proxmark3 Easy |
 
-## 5. Compiler le client et le firmware
+Cette configuration correspond au Proxmark3 Easy utilisé dans ce projet.
+
+Notre compilation n'activait pas l'option `PLATFORM_EXTRAS=FLASH`, même si une mémoire flash externe était détectée.
+
+> ⚠️ **Important :** ne pas utiliser automatiquement cette configuration pour un autre modèle de Proxmark3.
+
+---
+
+## 6. Compiler le firmware
+
+La compilation peut prendre plusieurs minutes sur un Raspberry Pi Zero 2 W.
+
+### Lancer la compilation
 
 ```bash
 cd ~/proxmark3-new
+```
+
+Puis :
+
+```bash
 make -j2
 ```
 
-Le Raspberry Pi Zero 2 W dispose de ressources limitées : `-j2` permet de limiter le parallélisme. Attendez la fin de la compilation et vérifiez qu'aucune erreur n'est affichée.
+L'option `-j2` permet d'utiliser deux tâches de compilation simultanées.
 
-Les fichiers générés comprennent notamment :
+Ce réglage limite la charge sur le Raspberry Pi Zero 2 W.
 
-- `armsrc/obj/fullimage.elf` : firmware ARM ;
-- `bootrom/obj/bootrom.elf` : bootloader ;
-- `pm3` : script de lancement du client.
+### Vérifier le résultat
 
-**Ne flashez pas automatiquement le bootloader** simplement parce qu'il a été compilé.
+Une fois la compilation terminée :
 
-## 6. Sauvegarder une installation précédente (mise à jour)
+```bash
+echo $?
+```
 
-Si une ancienne installation existe dans `~/proxmark3`, vous pouvez archiver son contenu avant toute opération :
+Un résultat de `0` indique que la dernière commande s'est terminée sans erreur.
+
+### Fichiers générés
+
+| Fichier                    | Description                   |
+| -------------------------- | ----------------------------- |
+| `armsrc/obj/fullimage.elf` | Firmware ARM                  |
+| `bootrom/obj/bootrom.elf`  | Bootloader                    |
+| `pm3`                      | Script de lancement du client |
+| `pm3-flash`                | Outil de flashage             |
+
+> ⚠️ **Attention :** la présence d'un nouveau bootloader compilé ne signifie pas qu'il faut obligatoirement l'installer.
+
+Dans notre projet, nous avons conservé l'ancien bootloader.
+
+---
+
+## 7. Sauvegarder l'ancienne installation
+
+Cette étape concerne les utilisateurs possédant déjà une installation fonctionnelle d'Iceman.
+
+Pour une première installation, passer directement à l'étape suivante.
+
+### Créer une archive
+
+Depuis le dossier personnel :
 
 ```bash
 cd ~
+```
+
+Puis :
+
+```bash
 tar -czf proxmark3-backup-$(date +%F).tar.gz proxmark3
 ```
 
-Cette archive sauvegarde les **fichiers logiciels**, pas une image de la mémoire interne du Proxmark3. Conservez séparément vos données et configurations personnelles ; ne publiez jamais de dumps RFID ni de clés sur GitHub.
+Cette commande crée une archive compressée du dossier `proxmark3`.
 
-## 7. Vérifier le périphérique et flasher uniquement le firmware ARM
+### Vérifier l'archive
 
-Depuis le **nouveau dépôt** :
+```bash
+tar -tzf proxmark3-backup-$(date +%F).tar.gz > /dev/null && echo "Archive OK"
+```
+
+Si tout fonctionne, le terminal affiche :
+
+```text
+Archive OK
+```
+
+### Important
+
+Cette sauvegarde contient les fichiers logiciels de l'ancienne installation.
+
+Elle ne constitue **pas une sauvegarde complète de la mémoire interne du Proxmark3**.
+
+Conserver séparément les données personnelles nécessaires.
+
+Ne jamais publier de clés ou de dumps RFID personnels sur GitHub.
+
+---
+
+## 8. Flasher le nouveau firmware
+
+Nous allons maintenant transférer le nouveau firmware vers le Proxmark3 Easy.
+
+Dans notre installation, nous avons choisi de **mettre à jour uniquement le firmware ARM**, sans modifier le bootloader.
+
+### Vérifier la détection du Proxmark3
 
 ```bash
 cd ~/proxmark3-new
+```
+
+Puis :
+
+```bash
 ./pm3-flash --list
 ```
 
-Vérifiez que votre appareil est détecté (dans notre cas `/dev/ttyACM0`). Puis lancez :
+Le Proxmark3 doit être détecté.
+
+Dans notre cas :
+
+```text
+1: /dev/ttyACM0
+```
+
+### Lancer le flashage
 
 ```bash
 ./pm3-flash armsrc/obj/fullimage.elf
 ```
 
-Attendez la fin du transfert et le message `All done`.
+Attendre la fin de l'opération.
 
-**Important :** n'utilisez **pas** l'option `-b` dans cette procédure : elle autorise l'écriture dans la zone du bootloader. Notre mise à jour réussie a remplacé uniquement le firmware ARM, en conservant le bootloader précédent.
+### Résultat attendu
 
-## 8. Vérifier le fonctionnement
+```text
+Flashing [===============================================================] 100%
 
-Lancez le nouveau client :
+[+] All done
+[=] Have a nice day!
+```
+
+Le firmware est maintenant installé.
+
+### Pourquoi conserver le bootloader ?
+
+Le bootloader est le programme qui permet notamment de charger le firmware.
+
+Lors de notre mise à jour :
+
+| Composant    | Version                           |
+| ------------ | --------------------------------- |
+| Client       | Octobre 2026                      |
+| Firmware ARM | Octobre 2026                      |
+| Images FPGA  | Novembre 2026, compilation locale |
+| Bootloader   | Juin 2026, conservé               |
+
+Cette combinaison a fonctionné sur notre matériel.
+
+> ⚠️ **Important :** ne pas ajouter l'option `-b` à la commande de flashage. Cette option autorise l'écriture dans la zone du bootloader.
+
+Ne jamais interrompre l'alimentation pendant le flashage.
+
+---
+
+## 9. Vérifier le fonctionnement
+
+Après le flashage, nous allons vérifier que le client communique correctement avec le Proxmark3.
+
+### Lancer le nouveau client
 
 ```bash
 cd ~/proxmark3-new
+```
+
+Puis :
+
+```bash
 ./pm3
 ```
 
-Dans l'invite Proxmark3 :
+L'interface du client Proxmark3 doit apparaître.
+
+### Vérifier les versions
+
+Dans le terminal Proxmark3 :
 
 ```text
 hw version
+```
+
+Cette commande affiche les versions du client, du firmware ARM, du bootloader et des images FPGA.
+
+Le client et le firmware ARM doivent correspondre à la nouvelle version.
+
+Le bootloader peut afficher une version plus ancienne si celui-ci a été conservé.
+
+### Vérifier l'état du matériel
+
+```text
 hw status
 ```
 
-Vérifiez que les versions **Client** et **OS** correspondent au nouveau code. Le **Bootrom** peut afficher une version plus ancienne : c'est attendu si vous l'avez conservé.
+Cette commande permet notamment de vérifier :
 
-Testez ensuite, avec **votre propre badge NFC ISO 14443-A**, une lecture non destructive :
+* La mémoire disponible.
+* La configuration FPGA.
+* Les paramètres radio.
+* La communication entre le Raspberry Pi et le Proxmark3.
+
+### Tester la lecture NFC
+
+Placer un badge NFC personnel compatible ISO 14443-A sur l'antenne.
+
+Exécuter :
 
 ```text
 hf 14a reader
 ```
 
-Dans notre test, la communication USB, les images FPGA et la lecture NFC fonctionnaient après le flashage. La mention `suspect` dans une chaîne de version n'indique pas à elle seule une panne matérielle.
+Le Proxmark3 doit détecter le badge et afficher ses informations disponibles.
 
-## 9. Utiliser le nouveau client avec la commande `pm3`
+Cette commande effectue une lecture sans modifier le badge.
 
-Si votre `PATH` contient déjà `~/proxmark3`, placez le nouveau dossier **avant** l'ancien. Pour Bash :
+### Résultat de notre installation
+
+Les tests réalisés ont confirmé :
+
+* Le fonctionnement du nouveau client.
+* La communication USB.
+* Le chargement des images FPGA.
+* La lecture NFC.
+* La compatibilité avec le bootloader conservé.
+
+> 💡 La mention `suspect` peut apparaître dans les informations de version. Elle ne signifie pas, à elle seule, que le matériel est défectueux.
+
+---
+
+## 10. Simplifier le lancement de Proxmark3
+
+Après l'installation, nous souhaitons pouvoir lancer le nouveau client depuis n'importe quel dossier avec une seule commande :
 
 ```bash
-# Ajoute la ligne uniquement si elle n'existe pas déjà
+pm3
+```
+
+### Vérifier la commande actuelle
+
+Quitter d'abord le client Proxmark3 :
+
+```text
+quit
+```
+
+Dans le terminal Linux :
+
+```bash
+type -a pm3
+```
+
+Si une ancienne installation existe, la commande peut encore pointer vers :
+
+```text
+/home/piuser/proxmark3/pm3
+```
+
+### Donner la priorité à la nouvelle installation
+
+Nous allons ajouter le nouveau dossier au début de la variable `PATH`.
+
+Pour éviter les doublons :
+
+```bash
 if ! grep -Fqx 'export PATH="$HOME/proxmark3-new:$PATH"' ~/.bashrc; then
   echo 'export PATH="$HOME/proxmark3-new:$PATH"' >> ~/.bashrc
 fi
+```
+
+Recharger la configuration :
+
+```bash
 source ~/.bashrc
+```
+
+### Vérifier
+
+```bash
 command -v pm3
 ```
 
-Le résultat attendu est :
+Résultat attendu :
 
 ```text
-/home/victor/proxmark3-new/pm3
+/home/piuser/proxmark3-new/pm3
 ```
 
-Remplacez `victor` par votre nom d'utilisateur si nécessaire. L'ancienne installation reste accessible explicitement via `~/proxmark3/pm3`, mais évitez d'utiliser son ancien client avec le nouveau firmware.
+Remplacer `piuser` par le nom de votre utilisateur.
 
-## 10. Conserver la session lors d'une coupure SSH
+### Utilisation quotidienne
 
-Pour installer **tmux** et créer la commande courte `pm`, consultez le [chapitre 2 — Configuration du Raspberry Pi](02-installation-raspberry.md). `tmux` maintient les programmes sur le Raspberry Pi lors d'une déconnexion SSH ; il ne maintient pas la connexion réseau elle-même.
+Désormais, une seule commande suffit :
 
-## Référence
+```bash
+pm3
+```
 
-Code source officiel : [RfidResearchGroup/proxmark3](https://github.com/RfidResearchGroup/proxmark3).
+L'ancienne installation reste disponible dans son dossier d'origine.
+
+> 💡 Pour conserver la session Proxmark3 lors d'une déconnexion SSH, utiliser `tmux` et la commande simplifiée `pm`, présentés dans le [chapitre 2 — Installation de Raspberry Pi OS](02-installation-raspberry.md).
+
+---
+
+## 11. Récapitulatif des commandes
+
+| Commande             | Fonction                                                 |
+| -------------------- | -------------------------------------------------------- |
+| `pm3`                | Lancer le client Proxmark3                               |
+| `hw version`         | Afficher les versions                                    |
+| `hw status`          | Vérifier l'état du matériel                              |
+| `hf 14a reader`      | Détecter un badge NFC compatible                         |
+| `./pm3-flash --list` | Détecter le Proxmark3 pour le flashage                   |
+| `make -j2`           | Compiler Iceman                                          |
+| `pm`                 | Créer ou retrouver une session tmux, après configuration |
+
+Les commandes `hw version`, `hw status` et `hf 14a reader` s'exécutent dans le client Proxmark3.
+
+Les autres commandes s'exécutent dans le terminal Linux.
+
+---
+
+## ✅ Installation terminée
+
+Le Proxmark3 Easy fonctionne maintenant avec le firmware Iceman installé sur le Raspberry Pi Zero 2 W.
+
+Nous disposons désormais :
+
+* D'un firmware Iceman récent.
+* D'un client compilé pour Raspberry Pi OS 64 bits.
+* D'une communication USB fonctionnelle.
+* D'une lecture RFID/NFC opérationnelle.
+* D'une ancienne installation conservée en sauvegarde.
+* D'un lancement simplifié avec `pm3`.
+* De sessions SSH persistantes grâce à `tmux`.
+
+---
+
+## ➡️ Étape suivante
+
+**Utilisation du Proxmark3 Easy à distance**
+
+Nous verrons comment accéder au Proxmark3 depuis un ordinateur ou un smartphone, utiliser les principales commandes et organiser les sessions de travail.
+
+[🏠 Retour à l'accueil](../../README.fr.md)
