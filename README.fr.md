@@ -70,17 +70,17 @@ Les commandes sont exécutées sur le Raspberry Pi, puis transmises au Proxmark3
 
 ## 📚 Documentation
 
-Le tutoriel sera organisé en plusieurs chapitres :
+Le tutoriel est organisé en plusieurs chapitres :
 
-1. **Présentation du projet** — Objectifs et fonctionnement.
-2. **Matériel nécessaire** — Liste des composants et branchements.
-3. **Installation du Raspberry Pi** — Préparation de la carte microSD et configuration initiale.
-4. **Installation du Proxmark3 Iceman** — Installation des dépendances et compilation.
-5. **Configuration du Wi-Fi** — Connexion et utilisation sans fil.
-6. **Connexion depuis un iPhone** — Accès SSH et pilotage du Proxmark3.
-7. **Utilisation du Proxmark3** — Premières commandes et exemples.
-8. **Dépannage** — Solutions aux problèmes les plus courants.
+1. 📖 [Matériel nécessaire et branchements](docs/fr/01-materiel.md)
+2. ⏳ Installation du Raspberry Pi
+3. ⏳ Installation du Proxmark3 Iceman
+4. ⏳ Configuration du Wi-Fi
+5. ⏳ Connexion depuis un iPhone
+6. ⏳ Utilisation du Proxmark3
+7. ⏳ Dépannage
 
+⏳ Les chapitres suivants sont en cours de rédaction.
 ---
 
 ## 🚧 État du projet
