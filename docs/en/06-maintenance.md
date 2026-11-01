@@ -291,6 +291,7 @@ On the Raspberry Pi:
 
 ```bash
 mkdir -p ~/backups
+chmod 700 ~/backups
 ```
 
 Create a timestamped directory:
@@ -298,7 +299,14 @@ Create a timestamped directory:
 ```bash
 BACKUP_DIR="$HOME/backups/$(date +%Y-%m-%d_%H-%M-%S)"
 mkdir -p "$BACKUP_DIR"
+chmod 700 "$BACKUP_DIR"
 ```
+
+> 🔐 **Security**
+>
+> The `chmod 700` command restricts access to these directories to their owner.
+>
+> This is important because backups may contain network credentials and other sensitive information.
 
 Check the directory:
 
@@ -349,11 +357,25 @@ sudo tar -czf "$BACKUP_DIR/networkmanager.tar.gz" \
   -C /etc NetworkManager/system-connections
 ```
 
+This command uses administrator privileges to read protected network profiles.
+
+The resulting archive may be owned by `root`. To allow your user to manage the backup:
+
+```bash
+sudo chown "$(id -u):$(id -g)" "$BACKUP_DIR/networkmanager.tar.gz"
+```
+
+Then protect its contents:
+
+```bash
+chmod 600 "$BACKUP_DIR/networkmanager.tar.gz"
+```
+
 > 🔐 **Security**
 >
-> NetworkManager profiles may contain Wi-Fi passwords and other sensitive information.
+> `chmod 600` allows only the file owner to read and modify the archive.
 >
-> Store this archive in a private, protected location.
+> NetworkManager profiles may contain Wi-Fi passwords. Never publish this archive in a GitHub repository.
 
 ### 🖥️ 4.4 — Back Up Bash Configuration
 
@@ -411,6 +433,18 @@ Create an archive of the backup directory:
 tar -czf "${BACKUP_DIR}.tar.gz" -C "$HOME/backups" "$(basename "$BACKUP_DIR")"
 ```
 
+Protect the archive:
+
+```bash
+chmod 600 "${BACKUP_DIR}.tar.gz"
+```
+
+> 🔐 **Important**
+>
+> This archive contains the previously backed-up files, including any saved Wi-Fi profiles.
+>
+> Keep it private. Never publish it on GitHub or share it publicly.
+
 Check that the archive exists:
 
 ```bash
@@ -432,6 +466,14 @@ Replace `YYYY-MM-DD_HH-MM-SS` with the actual archive name.
 > A backup stored only on the microSD card does not protect against card failure.
 >
 > Always copy important backups to another device.
+
+> 🔐 **Backup Protection**
+>
+> The `scp` command transfers files over an encrypted SSH connection.
+>
+> However, the resulting archive remains unencrypted on the destination computer.
+>
+> Store it in a private location, preferably on encrypted storage, and delete unnecessary temporary copies.
 
 ---
 
@@ -583,11 +625,17 @@ Verify that the Iceman client still works:
 pm
 ```
 
-Then:
+If the Iceman client is not already running inside the tmux session, start it:
 
 ```bash
 pm3
 ```
+
+> 💡 **Note**
+>
+> If `pm` reconnects you to an existing tmux session where Iceman is already running, do not start another instance of the client.
+>
+> After rebooting the Raspberry Pi, previous tmux sessions no longer exist.
 
 Inside Iceman:
 
@@ -697,6 +745,20 @@ Run:
 ```bash
 make -j2
 ```
+
+Immediately after compilation, check its exit status:
+
+```bash
+echo $?
+```
+
+An exit status of `0` indicates that compilation completed successfully.
+
+> ⚠️ **Important**
+>
+> Run `echo $?` immediately after `make -j2`, without executing another command in between.
+>
+> If compilation fails, do not proceed with any firmware flashing operation.
 
 The Raspberry Pi Zero 2 W has limited resources.
 
@@ -1265,12 +1327,8 @@ These improvements may be covered in future guides.
 
 | ⬅️ Previous Step | 🏠 Table of Contents | 🌐 Français |
 |---|---|---|
-| [Step 5 — Mobile Connection](05-mobile-connection.md) | [Back to Home](../../README.md) | [Étape 6 — Maintenance](../fr/06-maintenance.md) |
-
-> 💡 **Temporary navigation**
->
-> Navigation links and home pages will be harmonized during the final tutorial review.
+| [Step 5 — Mobile Connection](05-mobile-connection.md) | [Back to Home](../../README.md) | [Étape 6 — Maintenance, sauvegardes et mises à jour](../fr/06-maintenance.md) |
 
 ---
 
-📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
+📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**y — Raspberry Pi Zero 2 W Wireless**
