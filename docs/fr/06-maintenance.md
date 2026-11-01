@@ -291,6 +291,7 @@ Sur le Raspberry Pi :
 
 ```bash
 mkdir -p ~/backups
+chmod 700 ~/backups
 ```
 
 Créez un répertoire daté :
@@ -298,7 +299,14 @@ Créez un répertoire daté :
 ```bash
 BACKUP_DIR="$HOME/backups/$(date +%Y-%m-%d_%H-%M-%S)"
 mkdir -p "$BACKUP_DIR"
+chmod 700 "$BACKUP_DIR"
 ```
+
+> 🔐 **Sécurité**
+>
+> La commande `chmod 700` limite l'accès à ces répertoires à leur propriétaire.
+>
+> Cette précaution est importante, car les sauvegardes peuvent contenir des identifiants réseau et d'autres informations sensibles.
 
 Vérifiez :
 
@@ -348,6 +356,26 @@ Pour sauvegarder les profils réseau :
 sudo tar -czf "$BACKUP_DIR/networkmanager.tar.gz" \
   -C /etc NetworkManager/system-connections
 ```
+
+Cette commande utilise les droits administrateur pour lire les profils réseau protégés.
+
+Le fichier créé peut appartenir à `root`. Pour permettre à votre utilisateur de gérer cette sauvegarde :
+
+```bash
+sudo chown "$(id -u):$(id -g)" "$BACKUP_DIR/networkmanager.tar.gz"
+```
+
+Protégez ensuite son contenu :
+
+```bash
+chmod 600 "$BACKUP_DIR/networkmanager.tar.gz"
+```
+
+> 🔐 **Sécurité**
+>
+> `chmod 600` autorise uniquement le propriétaire à lire et modifier cette archive.
+>
+> Les profils NetworkManager peuvent contenir des mots de passe Wi-Fi. Ne publiez jamais cette archive dans un dépôt GitHub.
 
 > 🔐 **Sécurité**
 >
@@ -411,6 +439,18 @@ Créez une archive du dossier de sauvegarde :
 tar -czf "${BACKUP_DIR}.tar.gz" -C "$HOME/backups" "$(basename "$BACKUP_DIR")"
 ```
 
+Protégez cette archive :
+
+```bash
+chmod 600 "${BACKUP_DIR}.tar.gz"
+```
+
+> 🔐 **Important**
+>
+> Cette archive contient les fichiers sauvegardés précédemment, y compris les éventuels profils Wi-Fi.
+>
+> Elle doit rester privée et ne doit jamais être publiée sur GitHub ou partagée publiquement.
+
 Vérifiez que l'archive existe :
 
 ```bash
@@ -432,6 +472,14 @@ Remplacez `AAAA-MM-JJ_HH-MM-SS` par le nom réel de l'archive.
 > Une sauvegarde conservée uniquement sur la carte microSD ne protège pas contre une panne de cette carte.
 >
 > Copiez toujours les sauvegardes importantes sur un autre support.
+
+> 🔐 **Protection des sauvegardes**
+>
+> Le transfert avec `scp` utilise une connexion SSH chiffrée.
+>
+> Cependant, le fichier reste une archive non chiffrée sur l'ordinateur de destination.
+>
+> Conservez-le dans un emplacement privé, idéalement sur un support chiffré, et supprimez les copies temporaires inutiles.
 
 ---
 
@@ -583,11 +631,17 @@ Vérifiez ensuite que le client Iceman fonctionne toujours :
 pm
 ```
 
-Puis :
+Si le client Iceman n'est pas déjà actif dans la session tmux, lancez-le :
 
 ```bash
 pm3
 ```
+
+> 💡 **Remarque**
+>
+> Si `pm` vous reconnecte à une session tmux dans laquelle Iceman fonctionne déjà, ne lancez pas une seconde instance du client.
+>
+> Après un redémarrage du Raspberry Pi, les anciennes sessions tmux n'existent plus.
 
 Dans Iceman :
 
@@ -697,6 +751,20 @@ Exécutez :
 ```bash
 make -j2
 ```
+
+Immédiatement après la compilation, vérifiez son code de retour :
+
+```bash
+echo $?
+```
+
+La valeur `0` indique que la compilation s'est terminée correctement.
+
+> ⚠️ **Important**
+>
+> Exécutez `echo $?` immédiatement après `make -j2`, sans lancer d'autre commande entre les deux.
+>
+> Si la compilation échoue, ne poursuivez pas vers une opération de flashage.
 
 Le Raspberry Pi Zero 2 W possède des ressources limitées.
 
@@ -1265,11 +1333,7 @@ Ces améliorations pourront faire l'objet de guides complémentaires.
 
 | ⬅️ Étape précédente | 🏠 Sommaire | 🌐 English |
 |---|---|---|
-| [Étape 5 — Connexion mobile](05-connexion-mobile.md) | [Retour à l'accueil](../../README.fr.md) | [Step 6 — Maintenance](../en/06-maintenance.md) |
-
-> 💡 **Navigation provisoire**
->
-> Les liens de navigation et les pages d'accueil seront harmonisés lors de la révision finale du tutoriel.
+| [Étape 5 — Connexion mobile](05-connexion-mobile.md) | [Retour à l'accueil](../../README.fr.md) | [Step 6 — Maintenance, Backups and Updates](../en/06-maintenance.md) |
 
 ---
 
