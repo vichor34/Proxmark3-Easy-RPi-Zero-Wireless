@@ -70,17 +70,17 @@ Commands are executed on the Raspberry Pi and transmitted to the Proxmark3.
 
 ## 📚 Documentation
 
-The tutorial will be organized into several chapters:
+The tutorial is organized into several chapters:
 
-1. **Project Overview** — Goals and system architecture.
-2. **Required Hardware** — Components and connections.
-3. **Raspberry Pi Installation** — MicroSD preparation and initial configuration.
-4. **Proxmark3 Iceman Installation** — Dependencies and compilation.
-5. **Wi-Fi Configuration** — Wireless connectivity and setup.
-6. **Connecting from an iPhone** — SSH access and Proxmark3 control.
-7. **Using the Proxmark3** — Basic commands and examples.
-8. **Troubleshooting** — Solutions to common issues.
+1. 📖 [Required Hardware and Connections](docs/en/01-hardware.md)
+2. ⏳ Raspberry Pi Installation
+3. ⏳ Proxmark3 Iceman Installation
+4. ⏳ Wi-Fi Configuration
+5. ⏳ Connecting from an iPhone
+6. ⏳ Using the Proxmark3
+7. ⏳ Troubleshooting
 
+⏳ Additional chapters are currently being written.
 ---
 
 ## 🚧 Project Status
