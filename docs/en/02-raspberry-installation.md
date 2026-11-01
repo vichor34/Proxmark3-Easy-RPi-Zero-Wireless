@@ -23,6 +23,7 @@ The installation is performed without a monitor, keyboard, or mouse. The Raspber
 | Desktop Environment | None                 |
 | Network Manager     | NetworkManager       |
 | Remote Access       | SSH                  |
+| Persistent Sessions | tmux                 |
 
 This configuration matches the system used in this project.
 
@@ -273,8 +274,173 @@ The Raspberry Pi can reconnect to saved networks when they become available, dep
 
 ---
 
+## 11. Keep Terminal Sessions Running with tmux
+
+When accessing the Raspberry Pi remotely, SSH connections may be interrupted if:
+
+* The computer enters sleep mode.
+* The Wi-Fi connection drops.
+* The terminal is accidentally closed.
+* The user switches networks or devices.
+
+Without additional protection, programs running in the terminal may be interrupted.
+
+**tmux** allows terminal sessions to remain active on the Raspberry Pi independently of the SSH connection.
+
+This is especially useful when compiling Proxmark3 Iceman firmware or running long operations.
+
+### 11.1 Install tmux
+
+From your SSH terminal:
+
+```bash
+sudo apt update
+sudo apt install tmux -y
+```
+
+Verify the installation:
+
+```bash
+tmux -V
+```
+
+The installed version should be displayed.
+
+### 11.2 Create a Session
+
+Run:
+
+```bash
+tmux new -s proxmark
+```
+
+A new session named `proxmark` is created.
+
+You can now execute commands inside this session, for example:
+
+```bash
+pm3
+```
+
+The `pm3` command becomes available after installing the Iceman client, as described in Chapter 3.
+
+### 11.3 Detach from a Session
+
+To leave the session without stopping its programs:
+
+1. Press `Ctrl + B`.
+2. Release both keys.
+3. Press `D`.
+
+You will return to the regular SSH terminal.
+
+Programs running inside `tmux` continue running on the Raspberry Pi.
+
+### 11.4 Reattach to a Session
+
+After reconnecting through SSH:
+
+```bash
+tmux attach -t proxmark
+```
+
+This command restores the previous session.
+
+To list existing sessions:
+
+```bash
+tmux ls
+```
+
+### 11.5 Simplify Access with the `pm` Command
+
+Instead of typing a long command every time, we can create a Bash alias.
+
+Run:
+
+```bash
+echo "alias pm='tmux new-session -A -s proxmark'" >> ~/.bashrc
+```
+
+Reload the configuration:
+
+```bash
+source ~/.bashrc
+```
+
+From now on, you only need:
+
+```bash
+pm
+```
+
+The behavior is automatic:
+
+* If the `proxmark` session already exists, it is restored.
+* If no session exists, a new one is created.
+
+The alias will be available in future SSH sessions using Bash.
+
+### 11.6 Daily Usage
+
+The workflow becomes very simple.
+
+**1. Connect to the Raspberry Pi:**
+
+```bash
+ssh piuser@proxmark.local
+```
+
+**2. Open or restore your session:**
+
+```bash
+pm
+```
+
+**3. Launch Proxmark3:**
+
+```bash
+pm3
+```
+
+**4. To detach without stopping programs:**
+
+Press `Ctrl + B`, then `D`.
+
+The next time you connect, simply type `pm` to restore your session.
+
+### 11.7 Close a Session Permanently
+
+To close a session, first exit any running applications, then execute:
+
+```bash
+exit
+```
+
+The `tmux` session ends when no windows or programs remain active.
+
+### 11.8 Important Limitations
+
+**tmux does not keep the SSH connection itself alive.**
+
+It keeps programs running on the Raspberry Pi when the SSH connection is interrupted.
+
+The Raspberry Pi must remain powered on, and any required USB devices must remain connected.
+
+Power loss or a Raspberry Pi reboot will terminate existing `tmux` sessions.
+
+---
+
 ## ✅ Installation Complete
 
 The Raspberry Pi Zero 2 W is now ready for the Proxmark3 Iceman client installation.
 
-The next chapter will explain how to install the required dependencies, download the source code, and compile the software.
+We now have:
+
+* A lightweight, updated Linux system.
+* Remote access through SSH.
+* Configurable Wi-Fi connectivity.
+* Persistent terminal sessions using `tmux`.
+* A simplified `pm` command to resume work after disconnection.
+
+➡️ [Chapter 3 — Proxmark3 Installation and Firmware Update](03-proxmark3-installation.md)
