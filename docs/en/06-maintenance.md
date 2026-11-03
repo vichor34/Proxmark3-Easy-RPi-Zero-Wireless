@@ -1302,7 +1302,7 @@ The project can evolve with additional features:
 - Improved battery life.
 - External battery operation.
 - A 3D-printed enclosure.
-- A dedicated Wi-Fi access point.
+- [Automatic Wi-Fi hotspot configuration](07-wifi-hotspot.md).
 - Automatic Iceman startup.
 - Improved SSH security.
 - Automated diagnostic scripts.
@@ -1320,14 +1320,15 @@ These improvements may be covered in future guides.
 - [Step 2 — Raspberry Pi Installation](02-raspberry-installation.md)
 - [Step 3 — Proxmark3 Iceman Installation](03-proxmark3-installation.md)
 - [Step 4 — Daily Usage](04-daily-usage.md)
+- [Step 7 — Automatic Wi-Fi Hotspot](07-wifi-hotspot.md)
 
 ---
 
 ## 🧭 Navigation
 
-| ⬅️ Previous Step | 🏠 Table of Contents | 🌐 Français |
-|---|---|---|
-| [Step 5 — Mobile Connection](05-mobile-connection.md) | [Back to Home](../../README.md) | [Étape 6 — Maintenance, sauvegardes et mises à jour](../fr/06-maintenance.md) |
+| ⬅️ Previous Step | 🏠 Table of Contents | ➡️ Next Step | 🌐 Français |
+|---|---|---|---|
+| [Step 5 — Mobile Connection](05-mobile-connection.md) | [Back to Home](../../README.md) | [Step 7 — Automatic Wi-Fi Hotspot](07-wifi-hotspot.md) | [Étape 6 — Maintenance, sauvegardes et mises à jour](../fr/06-maintenance.md) |
 
 ---
 
