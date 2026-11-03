@@ -1332,4 +1332,4 @@ These improvements may be covered in future guides.
 
 ---
 
-📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**y — Raspberry Pi Zero 2 W Wireless**
+📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
