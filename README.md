@@ -26,6 +26,7 @@ The Raspberry Pi handles communication with the Proxmark3, while a smartphone or
 - 🔄 Use persistent terminal sessions with tmux.
 - 💾 Back up and maintain the installation.
 - 🎒 Build a portable and standalone RFID system.
+- 📶 **Automatic Wi-Fi hotspot**: connects to known Wi-Fi networks first and creates a standalone access point if none is available at startup.
 
 ---
 
@@ -116,6 +117,7 @@ Each chapter covers a specific step of the installation, configuration, or opera
 | 4 | [🖥️ Daily Usage](docs/en/04-daily-usage.md) | SSH access, tmux sessions, Iceman commands, and diagnostics |
 | 5 | [📱 Mobile Connection](docs/en/05-mobile-connection.md) | Connect from an iPhone, iPad, or Android smartphone |
 | 6 | [🔧 Maintenance, Backups and Updates](docs/en/06-maintenance.md) | Backups, updates, recovery, and troubleshooting |
+| 7 | [📶 Automatic Wi-Fi Hotspot](docs/en/07-wifi-hotspot.md) | Connect to known Wi-Fi networks or create a standalone hotspot |
 
 ### 🌐 French Documentation
 
