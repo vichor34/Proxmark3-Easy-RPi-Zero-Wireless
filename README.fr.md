@@ -117,7 +117,7 @@ Chaque chapitre présente une étape de l'installation, de la configuration ou d
 | 4 | [🖥️ Utilisation quotidienne](docs/fr/04-utilisation-quotidienne.md) | Connexion SSH, utilisation de tmux, commandes Iceman et diagnostics |
 | 5 | [📱 Connexion mobile](docs/fr/05-connexion-mobile.md) | Utilisation depuis un iPhone, un iPad ou un smartphone Android |
 | 6 | [🔧 Maintenance, sauvegardes et mises à jour](docs/fr/06-maintenance.md) | Sauvegardes, mises à jour, restauration et dépannage |
-| 7 | 📶 [Hotspot Wi-Fi automatique](docs/fr/07-hotspot-wifi.md) | Connexion aux réseaux connus ou création d'un hotspot autonome |
+| 7 | [📶 Hotspot Wi-Fi automatique](docs/fr/07-hotspot-wifi.md) | Connexion aux réseaux connus ou création d'un hotspot autonome |
 
 ### 🌐 Documentation en anglais
 
