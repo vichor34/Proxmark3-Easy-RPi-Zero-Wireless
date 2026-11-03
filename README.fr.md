@@ -105,7 +105,7 @@ Deux commandes facilitent l'utilisation quotidienne :
 
 ## 📚 Documentation
 
-Le tutoriel est organisé en **6 chapitres**, disponibles en français et en anglais.
+Le tutoriel est organisé en **7 chapitres**, disponibles en français et en anglais.
 
 Chaque chapitre présente une étape de l'installation, de la configuration ou de l'utilisation du système.
 
@@ -259,7 +259,7 @@ Consultez le [chapitre 6 — Maintenance, sauvegardes et mises à jour](docs/fr/
 
 ## 🚧 État du projet
 
-🟢 **Les six chapitres du tutoriel sont disponibles en français et en anglais.**
+🟢 **Les sept chapitres du tutoriel sont disponibles en français et en anglais.**
 
 Le projet repose sur un montage personnel utilisant un Raspberry Pi Zero 2 W et un Proxmark3 Easy générique.
 
