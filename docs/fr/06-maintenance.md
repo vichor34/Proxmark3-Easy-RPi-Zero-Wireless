@@ -1308,7 +1308,7 @@ Le projet peut évoluer avec de nouvelles fonctionnalités :
 - Amélioration de l'autonomie.
 - Utilisation d'une batterie externe.
 - Création d'un boîtier imprimé en 3D.
-- Configuration d'un point d'accès Wi-Fi dédié.
+- [Configuration d'un hotspot Wi-Fi automatique](07-hotspot-wifi.md).
 - Automatisation du démarrage d'Iceman.
 - Amélioration de la sécurité SSH.
 - Développement de scripts de diagnostic.
@@ -1326,14 +1326,15 @@ Ces améliorations pourront faire l'objet de guides complémentaires.
 - [Étape 2 — Installation du Raspberry Pi](02-installation-raspberry.md)
 - [Étape 3 — Installation de Proxmark3 Iceman](03-installation-proxmark3.md)
 - [Étape 4 — Utilisation quotidienne](04-utilisation-quotidienne.md)
+- [Étape 7 — Hotspot Wi-Fi automatique](07-hotspot-wifi.md)
 
 ---
 
 ## 🧭 Navigation
 
-| ⬅️ Étape précédente | 🏠 Sommaire | 🌐 English |
-|---|---|---|
-| [Étape 5 — Connexion mobile](05-connexion-mobile.md) | [Retour à l'accueil](../../README.fr.md) | [Step 6 — Maintenance, Backups and Updates](../en/06-maintenance.md) |
+| ⬅️ Étape précédente | 🏠 Sommaire | ➡️ Étape suivante | 🌐 English |
+|---|---|---|---|
+| [Étape 5 — Connexion mobile](05-connexion-mobile.md) | [Retour à l'accueil](../../README.fr.md) | [Étape 7 — Hotspot Wi-Fi automatique](07-hotspot-wifi.md) | [Step 6 — Maintenance, Backups and Updates](../en/06-maintenance.md) |
 
 ---
 
