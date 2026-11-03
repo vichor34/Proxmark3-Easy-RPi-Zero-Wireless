@@ -105,7 +105,7 @@ Two commands simplify daily operation:
 
 ## 📚 Documentation
 
-The tutorial is organized into **6 chapters**, available in both English and French.
+The tutorial is organized into **7 chapters**, available in both English and French.
 
 Each chapter covers a specific step of the installation, configuration, or operation of the system.
 
@@ -259,7 +259,7 @@ See [Chapter 6 — Maintenance, Backups and Updates](docs/en/06-maintenance.md).
 
 ## 🚧 Project Status
 
-🟢 **All six tutorial chapters are available in English and French.**
+🟢 **All seven tutorial chapters are available in English and French.**
 
 This project is based on a personal setup using a Raspberry Pi Zero 2 W and a generic Proxmark3 Easy.
 
@@ -322,7 +322,9 @@ The documentation license does not, by itself, restrict the manufacture or sale 
 - [CC BY-NC-SA 4.0 License](LICENSE)
 - [Additional Permissions](PERMISSIONS.md)
 - [Commercial Licensing](COMMERCIAL.md)
-- [Contributing Guidelines](CONTRIBUTING.md)---
+- [Contributing Guidelines](CONTRIBUTING.md)
+
+---
 
 📡 **Project: Proxmark3 Easy — Raspberry Pi Zero 2 W Wireless**
 
